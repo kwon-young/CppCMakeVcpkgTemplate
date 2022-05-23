@@ -19,10 +19,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        qtver: 5.15.2
-        qtdir: msvc2019_64
-        qtstr: windows desktop win64_msvc2019_64
+        include:
+          - name: Linux
+            os: ubuntu-latest
+
+          - name: Windows
+            os: windows-latest
+            qtver: 5.15.2
+            qtdir: msvc2019_64
+            qtstr: windows desktop win64_msvc2019_64
 
     steps:
       - uses: actions/checkout@v2
