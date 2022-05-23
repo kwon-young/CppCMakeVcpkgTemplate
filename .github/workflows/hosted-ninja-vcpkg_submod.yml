@@ -20,6 +20,9 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+        qtver: 5.15.2
+        qtdir: msvc2019_64
+        qtstr: windows desktop win64_msvc2019_64
 
     steps:
       - uses: actions/checkout@v2
@@ -31,8 +34,30 @@ jobs:
       - name: Linux - Setup
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
         run: |
-          sudo apt-get install -y gperf libgles2-mesa-dev
+          sudo apt-get install -y gperf libgles2-mesa-dev qt5-default
           sudo apt-get update -y
+      - name: Windows - Setup
+        if: ${{ startsWith(matrix.os, 'windows') }}
+        env:
+          QT_DIR: ${{ github.workspace }}\${{ matrix.qtver }}\${{ matrix.qtdir }}
+        run: |
+          Add-Content -Path $env:GITHUB_ENV -Value "CMAKE_PREFIX_PATH=$env:QT_DIR;$env:QT_DIR\lib\cmake"
+          Add-Content -Path $env:GITHUB_PATH -Value "${{ env.qt_dir }}"
+          Add-Content -Path $env:GITHUB_PATH -Value "${{ env.qt_dir }}\bin"
+
+      - name: Qt Cache Restore
+        if: ${{ startsWith(matrix.os, 'windows') }}
+        id: cache-qt
+        uses: actions/cache@v2
+        with:
+          path: ${{ matrix.qtver }}\${{ matrix.qtdir }}
+          key: qt-${{ matrix.os }}-${{ matrix.qtver }}-${{ matrix.qtdir }}
+
+      - name: Qt Cache Install
+        if: ${{ startsWith(matrix.os, 'windows') && steps.cache-qt.outputs.cache-hit != 'true' }}
+        run: |
+          pip install aqtinstall
+          python -m aqt install ${{ matrix.qtver }} ${{ matrix.qtstr }}
 
       - uses: lukka/get-cmake@latest
 
