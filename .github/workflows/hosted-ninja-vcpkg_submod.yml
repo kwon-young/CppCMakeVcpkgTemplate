@@ -25,6 +25,14 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+      #
+      # Setup and Configuration
+      #
+      - name: Linux - Setup
+        if: ${{ startsWith(matrix.os, 'ubuntu') }}
+        run: |
+          sudo apt-get install -y gperf
+          sudo apt-get update -y
 
       - uses: lukka/get-cmake@latest
 
