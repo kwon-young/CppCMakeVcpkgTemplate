@@ -1,12 +1,11 @@
-// main.cpp
-#include <sqlite3.h>
-#include <stdio.h>
-#include <fmt/core.h>
+#include "mainview.h"
+#include <QApplication>
 
-// main function!
-int main()
+int main(int argc, char *argv[])
 {
-    fmt::print("Hello, world!\n");
-    printf("%s\n", sqlite3_libversion());
-    return 0;
+    QApplication a(argc, argv);
+    MainView w;
+    w.show();
+
+    return a.exec();
 }
