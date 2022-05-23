@@ -2,6 +2,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(ImageStitcher)
 
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+
 find_package(OpenCV REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
