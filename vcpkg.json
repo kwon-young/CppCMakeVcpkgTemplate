@@ -4,6 +4,8 @@
   "dependencies": [
     "fmt",
     "boost-config",
-    "sqlite3"
+    "sqlite3",
+    "qt5",
+    "opencv"
   ]
 }
