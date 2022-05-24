@@ -2,6 +2,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(ImageStitcher)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 find_package(OpenCV REQUIRED)

@@ -15,8 +15,18 @@ public:
     explicit MainView(QWidget *parent = 0);
     ~MainView();
 
+private slots:
+    void open();
+    void saveAs();
+
 private:
+    bool loadFile(const QStringList &fileNames);
+    bool saveFile(const QString &fileName);
+    void setImage(const QImage &newImage);
     Ui::MainView *ui;
+
+    QImage image;
+    float scaleFactor;
 };
 
 #endif // MAINVIEW_H
