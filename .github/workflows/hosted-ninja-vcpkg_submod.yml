@@ -79,7 +79,9 @@ jobs:
           configurePreset: 'ninja-multi-vcpkg'
           buildPreset: 'ninja-multi-vcpkg-release'
           testPreset: 'ninja-multi-vcpkg-release'
+
       - name: Windows - Publish Release Build
         if: ${{ startsWith(matrix.os, 'windows') }}
         run: |
-          ls -alh
+          Get-ChildItem
+          cmake --build --preset ninja-multi-vcpkg-release --target install
