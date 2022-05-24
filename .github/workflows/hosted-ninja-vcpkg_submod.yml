@@ -84,7 +84,7 @@ jobs:
         if: ${{ startsWith(matrix.os, 'windows') }}
         run: |
           Get-ChildItem
-          cmake --install ./builds/ninja-multi-vcpkg-release --config RelWithDebInfo --prefix ./install -v
+          cmake --install ./builds/ninja-multi-vcpkg --config RelWithDebInfo --prefix ./install -v
           Push-Location ${{ github.workspace }}/builds/ninja-multi-vcpkg
           cpack --verbose -G WIX
           Pop-Location
