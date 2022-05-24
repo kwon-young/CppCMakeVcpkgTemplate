@@ -67,7 +67,6 @@ bool MainView::loadFile(const QStringList &fileNames)
     /*     return false; */
     /* } */
     std::vector<cv::Mat> cvimages;
-    cv::Mat stitched;
     cv::Ptr<cv::Stitcher> stitcher = cv::Stitcher::create(cv::Stitcher::SCANS);
     for (const auto & fileName : fileNames)
     {
@@ -83,9 +82,10 @@ bool MainView::loadFile(const QStringList &fileNames)
     // create an image window named "My Image" and show it
     //cv::namedWindow("My Image");
     //cv::imshow("My Image", image);
-    cv::cvtColor(stitched, stitched, CV_BGR2RGB);
-    QImage qOriginalImage((uchar*)stitched.data, stitched.cols,
-      stitched.rows, stitched.step, QImage::Format_RGB888);
+    cv::Mat inversed;
+    cv::cvtColor(stitched, inversed, CV_BGR2RGB);
+    QImage qOriginalImage((uchar*)inversed.data, inversed.cols,
+      inversed.rows, inversed.step, QImage::Format_RGB888);
 
     setImage(qOriginalImage);
 
@@ -124,14 +124,15 @@ void MainView::open()
 
 bool MainView::saveFile(const QString &fileName)
 {
-    QImageWriter writer(fileName);
+    /* QImageWriter writer(fileName); */
 
-    if (!writer.write(image)) {
-        QMessageBox::information(this, QGuiApplication::applicationDisplayName(),
-                                 tr("Cannot write %1: %2")
-                                 .arg(QDir::toNativeSeparators(fileName)), writer.errorString());
-        return false;
-    }
+    cv::imwrite(fileName.toStdString(), stitched);
+    /* if (!writer.write(image)) { */
+    /*     QMessageBox::information(this, QGuiApplication::applicationDisplayName(), */
+    /*                              tr("Cannot write %1: %2") */
+    /*                              .arg(QDir::toNativeSeparators(fileName)), writer.errorString()); */
+    /*     return false; */
+    /* } */
     /* const QString message = tr("Wrote \"%1\"").arg(QDir::toNativeSeparators(fileName)); */
     /* statusBar()->showMessage(message); */
     return true;

@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include <opencv2/core/core.hpp>
+
 namespace Ui {
 class MainView;
 }
@@ -26,6 +28,7 @@ private:
     Ui::MainView *ui;
 
     QImage image;
+    cv::Mat stitched;
     float scaleFactor;
 };
 
