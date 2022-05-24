@@ -4,7 +4,6 @@ project(ImageStitcher)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
-set(OpenCV_STATIC ON)
 find_package(OpenCV REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
@@ -30,6 +29,7 @@ message(STATUS "Install directory: ${CMAKE_INSTALL_BINDIR}")
 install(TARGETS imagestitcher DESTINATION bin)
 
 if(WIN32 AND NOT CMAKE_CROSSCOMPILING)
+	install(TARGETS imagestitcher RUNTIME_DEPENDENCIES DESTINATION bin)
 	include(WinDeployQt)
 	WinDeployQt(TARGET imagestitcher COMPILER_RUNTIME INCLUDE_MODULES ${QTLIBS} EXCLUDE_MODULES webkit webkit2)
 	install(DIRECTORY ${PROJECT_BINARY_DIR}/windeployqt/
