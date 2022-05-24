@@ -24,6 +24,10 @@ target_sources(imagestitcher PRIVATE ${SOURCES} )
 target_link_libraries(imagestitcher PRIVATE ${OpenCV_LIBS} Qt5::Widgets)
 set_property(TARGET imagestitcher PROPERTY CXX_STANDARD 20)
 
+message(STATUS "Install directory: ${CMAKE_INSTALL_BINDIR}")
+
+install(TARGETS imagestitcher DESTINATION ${CMAKE_INSTALL_BINDIR})
+
 if(WIN32 AND NOT CMAKE_CROSSCOMPILING)
 	include(WinDeployQt)
 	WinDeployQt(TARGET imagestitcher COMPILER_RUNTIME INCLUDE_MODULES ${QTLIBS} EXCLUDE_MODULES webkit webkit2)
