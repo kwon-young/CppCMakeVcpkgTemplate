@@ -84,4 +84,10 @@ jobs:
         if: ${{ startsWith(matrix.os, 'windows') }}
         run: |
           Get-ChildItem
-          cmake --build --preset ninja-multi-vcpkg-release --target install
+          cmake --build --preset ninja-multi-vcpkg-release --target install --prefix ./install
+          Push-Location ${{ github.workspace }}/builds/ninja-multi-vcpkg/RelWithDebInfo
+          cpack --verbose -G WIX
+          Pop-Location
+          Compress-Archive -Path ./install/bin -DestinationPath ImageStitcher.zip
+          Move-Item -Path ./builds/ninja-multi-vcpkg/RelWithDebInfo/imagestitcher-installer.msi -Destination imagestitcher-installer.msi
+
