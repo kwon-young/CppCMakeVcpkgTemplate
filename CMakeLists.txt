@@ -26,11 +26,11 @@ set_property(TARGET imagestitcher PROPERTY CXX_STANDARD 20)
 
 message(STATUS "Install directory: ${CMAKE_INSTALL_BINDIR}")
 
-install(TARGETS imagestitcher DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS imagestitcher DESTINATION bin)
 
 if(WIN32 AND NOT CMAKE_CROSSCOMPILING)
 	include(WinDeployQt)
 	WinDeployQt(TARGET imagestitcher COMPILER_RUNTIME INCLUDE_MODULES ${QTLIBS} EXCLUDE_MODULES webkit webkit2)
 	install(DIRECTORY ${PROJECT_BINARY_DIR}/windeployqt/
-		DESTINATION ${CMAKE_INSTALL_BINDIR})
+		DESTINATION bin)
 endif()
