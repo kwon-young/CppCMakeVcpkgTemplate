@@ -4,6 +4,7 @@ project(ImageStitcher)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
+set(OpenCV_STATIC ON)
 find_package(OpenCV REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
