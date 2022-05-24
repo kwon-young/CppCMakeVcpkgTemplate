@@ -85,9 +85,12 @@ jobs:
         run: |
           Get-ChildItem
           cmake --install ./builds/ninja-multi-vcpkg --config RelWithDebInfo --prefix ./install -v
-          Push-Location ${{ github.workspace }}/builds/ninja-multi-vcpkg
-          cpack --verbose -G WIX
-          Pop-Location
           Compress-Archive -Path ./install -DestinationPath ImageStitcher.zip
-          Move-Item -Path ./builds/ninja-multi-vcpkg/RelWithDebInfo/imagestitcher-installer.msi -Destination imagestitcher-installer.msi
 
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.name }}
+          if-no-files-found: ignore
+          path: |
+            ImageStitcher.zip
